@@ -36,6 +36,4 @@ Investigate the schema of the database; the structure of the database. If in the
 
 After each challenge, check the database structure to verify that the changes were made successfully.
 
-When you get to problem four, ask students about relationships between tables and cover the definition of relational databases.
-
 https://docs.google.com/spreadsheets/d/1cJ2GtQWKfO4U1AKXF-bJd5e_uy3Ri6BwFArFoixAeJM/edit?usp=sharing
