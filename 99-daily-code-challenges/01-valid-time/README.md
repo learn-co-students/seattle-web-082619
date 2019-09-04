@@ -17,7 +17,6 @@ valid_time?(time) = false.
 
 **Input/Output**
 
-- **[execution time limit] 5 seconds (ts)**
 - **[input] string time**
 
 A string representing time in HH:MM format. It is guaranteed that the first two characters, as well as the last two characters, are digits.
