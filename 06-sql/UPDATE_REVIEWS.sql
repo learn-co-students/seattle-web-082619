@@ -1,0 +1,1 @@
+UPDATE reviews SET rating = 1 WHERE reviews.id = 1;
