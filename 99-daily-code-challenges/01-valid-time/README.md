@@ -12,8 +12,8 @@ valid_time?(time) = false;
 valid_time?(time) = false.
 
 **Hints**
--   parseInt()
--   split()
+-   to_i
+-   split
 
 **Input/Output**
 
