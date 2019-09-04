@@ -9,10 +9,9 @@ desc "Seed the database with some normal data"
 task :seed do
   puts "seeding database..."
   DB[:conn].execute("DROP TABLE IF EXISTS notes")
-  DB[:conn].execute("CREATE TABLE notes (id integer PRIMARY KEY, text string)")
-  DB[:conn].execute("INSERT INTO notes(text) VALUES('buy milk'), ('feed cat')")
-  rows = DB[:conn].execute("SELECT * FROM notes")
-  puts rows
+  DB[:conn].execute("CREATE TABLE notes (id integer PRIMARY KEY, text string, is_complete string)")
+  DB[:conn].execute("INSERT INTO notes(text, is_complete) VALUES('buy milk', 'incomplete'), ('feed cat', 'incomplete')")
+  puts "Created #{Note.all.length} notes"
 end
 
 desc "Take or view notes"
@@ -29,11 +28,11 @@ task :notes do
     if choice == "1"
       puts "Here are all your notes..."
       Note.all.each do |note|
-        is_complete = " "
-        if note.is_complete
-          is_complete = "*"
+        is_complete_sign = " "
+        if note.is_complete == "complete"
+          is_complete_sign = "*"
         end
-        puts "(#{is_complete}) #{note.text}"
+        puts "(#{is_complete_sign}) #{note.text}"
       end
       puts
     elsif choice == "2"
@@ -45,9 +44,10 @@ task :notes do
       puts
     elsif choice == "3"
       puts "Enter the number of a note you want to toggle completeness of"
-      index = STDIN.gets.chomp.to_i
+      # subtract 1 to account for zero-based indexing
+      index = STDIN.gets.chomp.to_i - 1
       note = Note.all[index]
-      note.toggle_completed
+      note.toggle_complete
       note.save
     elsif choice == "4"
       puts "Goodbye!"

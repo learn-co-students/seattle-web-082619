@@ -1,10 +1,10 @@
 class Note
-  attr_reader :text, :is_completed
+  attr_accessor :text, :is_complete, :id
 
   def initialize(text)
     @id = nil
     @text = text
-    @is_completed = false
+    @is_complete = false
   end
 
   # queries a database to select all notes
@@ -16,18 +16,26 @@ class Note
     # we need to take the raw data and
     # convert the data back into actual Note instances
     notes.map do |note|
-      Note.new(note["text"])
+      nn = Note.new(note["text"])
+      nn.id = note["id"]
+      nn.is_complete = note["is_complete"]
+      nn
     end
   end
 
-  def toggle_completed
-    @is_completed = !is_completed
+  def toggle_complete
+    if @is_complete == "complete"
+      @is_complete = "incomplete"
+    else
+      @is_complete = "complete"
+    end
   end
 
   # insert a new note into a database
   def save
     if @id
       # run an UPDATE query if it is in the database
+      DB[:conn].execute("UPDATE notes SET text='#{@text}', is_complete='#{@is_complete}' WHERE id=#{@id}")
     else
       # INSERT if it's not in the database yet.
       DB[:conn].execute("INSERT INTO notes(text) VALUES('#{@text}')")
