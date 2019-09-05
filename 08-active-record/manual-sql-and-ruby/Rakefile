@@ -1,0 +1,78 @@
+require_relative './config/environment'
+
+desc "Interactive console with your environment config"
+task :console do
+  binding.pry
+end
+
+desc "Seed the database with some normal data"
+task :seed do
+  puts "seeding database..."
+  DB[:conn].execute("DROP TABLE IF EXISTS notes")
+  DB[:conn].execute("DROP TABLE IF EXISTS users")
+  DB[:conn].execute("CREATE TABLE users (id integer PRIMARY KEY, username string)")
+  DB[:conn].execute("CREATE TABLE notes (id integer PRIMARY KEY, text string, is_complete string, user_id integer)")
+
+  DB[:conn].execute("INSERT INTO users(username) VALUES('Steve')")
+  DB[:conn].execute("INSERT INTO users(username) VALUES('Dr. Evil')")
+
+  DB[:conn].execute("INSERT INTO notes(text, is_complete, user_id) VALUES('buy milk', 'incomplete', 1), ('feed cat', 'incomplete', 1)")
+  DB[:conn].execute("INSERT INTO notes(text, is_complete, user_id) VALUES('buy laser', 'complete', 2), ('capture Bond', 'incomplete', 2), ('rule the world', 'incomplete', 2)")
+  puts "Created #{Note.all.length} notes"
+end
+
+desc "Take or view notes"
+task :notes do
+  puts "Welcome to notes. Enter your name:"
+  name = STDIN.gets.chomp
+  user = User.find_by_name(name)
+  if (user != nil && user.username == name)
+    puts "Welcome back, #{user.username}!"
+  else
+    user = User.new(name)
+    user.save
+    puts "Welcome! You're account has been created."
+  end
+
+  is_running = true
+  while is_running
+    puts "Enter a number for what you want to do."
+    puts "1. View Notes"
+    puts "2. Enter a new note"
+    puts "3. Mark a note as complete"
+    puts "4. Exit"
+
+    choice = STDIN.gets.chomp
+    if choice == "1"
+      puts "Here are all your notes..."
+      user.notes.each do |note|
+        is_complete_sign = " "
+        if note.is_complete == "complete"
+          is_complete_sign = "✓"
+        end
+        puts "(#{is_complete_sign}) #{note.text}"
+      end
+      puts
+    elsif choice == "2"
+      puts "Type your note and press [enter]"
+      note = STDIN.gets.chomp
+      note = Note.new(note)
+      note.save(user.id)
+      puts "Saved!"
+      puts
+    elsif choice == "3"
+      puts "Enter the number of a note you want to toggle completeness of"
+      # subtract 1 to account for zero-based indexing
+      index = STDIN.gets.chomp.to_i - 1
+      note = Note.all[index]
+      note.toggle_complete
+      note.save
+    elsif choice == "4"
+      puts "Goodbye!"
+      is_running = false
+    else
+      puts "Try again."
+      puts
+    end
+  end
+end
