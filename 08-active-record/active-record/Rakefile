@@ -1,0 +1,7 @@
+require 'sinatra/activerecord/rake'
+require_relative './config/environment'
+
+desc 'Loads the environment and starts a pry session'
+task :console do
+  Pry.start
+end

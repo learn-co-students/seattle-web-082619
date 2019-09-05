@@ -1,0 +1,20 @@
+require_relative 'config/environment'
+
+desc 'Loads up a console!'
+task :console do
+  Pry.start
+end
+
+desc 'A small rake demo'
+task :demo do
+  puts "welcome to the demo!"
+  aa = [1, 2, 3]
+  puts "here is an array"
+  puts aa
+end
+
+desc 'runs the command line interface'
+task :cli do
+  cli = CLI.new
+  cli.run
+end

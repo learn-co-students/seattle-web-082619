@@ -1,0 +1,21 @@
+notes
+| id | text              | is_complete | user_id |
+==================================================
+| 01 | buy milk          | incomplete  |   01    |
+| 02 | feed cat          |   complete  |   01    |
+| 03 | purchase laser    |   complete  |   02    |
+| 04 | capture Bond      | incomplete  |   02    |
+| 05 | rule the world    | incomplete  |   02    |
+
+users
+| id | username                        |
+========================================
+| 01 | Steve                           |
+| 02 | Dr. Evil                        |
+
+CREATE TABLE users (id integer PRIMARY KEY, username string)
+
+SELECT username, text, is_complete
+FROM notes
+JOIN users
+ON notes.user_id = users.id

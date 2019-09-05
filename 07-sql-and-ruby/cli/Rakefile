@@ -1,0 +1,97 @@
+require_relative './config/environment'
+
+desc "Interactive console with your environment config"
+task :console do
+  binding.pry
+end
+
+desc "Seed the database with some normal data"
+task :seed do
+  puts "seeding database..."
+  DB[:conn].execute("DROP TABLE IF EXISTS notes")
+  DB[:conn].execute("CREATE TABLE notes (id integer PRIMARY KEY, text string, is_complete string)")
+  DB[:conn].execute("INSERT INTO notes(text, is_complete) VALUES('buy milk', 'incomplete'), ('feed cat', 'incomplete')")
+  puts "Created #{Note.all.length} notes"
+end
+
+desc "Take or view notes"
+task :notes do
+  is_running = true
+  while is_running
+    puts "Welcome to notes. Enter a number for what you want to do."
+    puts "1. View Notes"
+    puts "2. Enter a new note"
+    puts "3. Mark a note as complete"
+    puts "4. Exit"
+
+    choice = STDIN.gets.chomp
+    if choice == "1"
+      puts "Here are all your notes..."
+      Note.all.each do |note|
+        is_complete_sign = " "
+        if note.is_complete == "complete"
+          is_complete_sign = "*"
+        end
+        puts "(#{is_complete_sign}) #{note.text}"
+      end
+      puts
+    elsif choice == "2"
+      puts "Type your note and press [enter]"
+      note = STDIN.gets.chomp
+      note = Note.new(note)
+      note.save
+      puts "Saved!"
+      puts
+    elsif choice == "3"
+      puts "Enter the number of a note you want to toggle completeness of"
+      # subtract 1 to account for zero-based indexing
+      index = STDIN.gets.chomp.to_i - 1
+      note = Note.all[index]
+      note.toggle_complete
+      note.save
+    elsif choice == "4"
+      puts "Goodbye!"
+      is_running = false
+    else
+      puts "Try again."
+      puts
+    end
+  end
+end
+
+desc "Play a guessing game"
+task :game do
+  Game.run
+end
+
+desc "Repeats whatever you type"
+task :echo do
+  puts "type something in and press [enter]"
+  input = STDIN.gets.chomp
+  puts input
+end
+
+desc "Capitalizes all user input"
+task :upcase do
+  puts "type something in and press [enter]"
+  input = STDIN.gets.chomp
+  puts input.upcase
+end
+
+desc "Reads in space-separated numbers and sums them"
+task :sum do
+  puts "type in numbers with spaces between and press [enter]"
+  numbers = STDIN.gets.chomp
+  puts "#{numbers.class} #{numbers}"
+
+  numbers = numbers.split(" ")
+  puts "#{numbers.class} #{numbers}"
+
+  numbers = numbers.map do |num|
+    num.to_i
+  end
+  puts "#{numbers.class} #{numbers}"
+
+  sum = numbers.sum
+  puts sum
+end
