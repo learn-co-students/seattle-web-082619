@@ -5,11 +5,6 @@ task :run do
     CLI.run
 end
 
-desc 'Other rake task'
-task :other_rake_task do
-    CLI.run
-end
-
 desc 'See Seattle subrreddit reddit posts'
 task :reddit do
     RedditCLI.run
