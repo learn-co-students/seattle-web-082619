@@ -1,0 +1,6 @@
+require_relative './config/environment'
+
+desc 'See a random cat fact'
+task :cat_fact do
+    CatFactsCLI.run
+end
