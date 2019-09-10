@@ -13,8 +13,6 @@ class UsersController < ApplicationController
     password = params[:password]
     user = User.find_by(username: username)
     user.authenticate(password)
-
-    session[:user_id] = user.id
   end
  
   private

@@ -5,5 +5,8 @@ Rails.application.routes.draw do
   post '/signin', to: 'sessions#create'
   post '/logout', to: 'sessions#destroy'
 
+  get '/public', to: 'public#index'
+  get '/public_secret', to: 'public#secret'
+
   resource :users
 end

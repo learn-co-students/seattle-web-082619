@@ -8,4 +8,4 @@ Bundler.require
 # require 'json'
 # require 'rest-client'
 
-require_all 'lib'
+require_all 'bin'

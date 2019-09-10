@@ -8,6 +8,8 @@ query = gets.chomp.split(" ").join("+")
 # query requires '+' to link words. How can we do this?
 response = RestClient.get("https://www.googleapis.com/books/v1/volumes?q=#{query}")
 
+binding.pry
+
 # Notice the pause here. What is happening? Why is it so slow?
 
 response_hash = JSON.parse(response)
