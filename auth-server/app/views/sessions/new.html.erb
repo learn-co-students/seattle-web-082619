@@ -1,9 +1,14 @@
 
 <h1>Auth App</h1>
 
-<% if session[:username] %>
-  <%= session[:username] %>  
-<% end %>
+<div>
+  Logged in as:
+  <% if session[:username] %>
+      <%= session[:username] %>  
+  <% else %>
+      no one
+  <% end %>
+</div>
 
 <div>
   <form method='post' action='/signin'>
@@ -13,4 +18,10 @@
   </form>
 </div>
 
-<%= link_to "Logout", '/logout', method: 'POST' %>
+<div>
+  <%= link_to "Secret Recipes", "/secret" %> (must be logged in)
+ </div>
+
+<div>
+  <%= link_to "Logout", '/logout', method: 'POST' %>
+</div>
