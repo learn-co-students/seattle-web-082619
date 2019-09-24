@@ -1,0 +1,10 @@
+<%= flash[:message] %>
+<%= form_for @book do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title%>
+  <%= f.label :author %>
+  <%= f.collection_select :author_id, @authors, :id, :name %>
+  <%= f.label :snippet %>
+  <%= f.text_field :snippet%>
+  <%= f.submit %>
+<% end %>
