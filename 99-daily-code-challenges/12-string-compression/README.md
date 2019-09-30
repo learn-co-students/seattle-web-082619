@@ -7,3 +7,5 @@ Example IO:
 str_compress('access');
 => 'a1c2e1s2'
 ```
+
+source: Cracking the coding interview, Gayle Mcdowell, chapter 1
