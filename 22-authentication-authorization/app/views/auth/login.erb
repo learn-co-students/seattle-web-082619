@@ -1,0 +1,7 @@
+<%= flash[:login_please]%>
+<%= flash[:message]%>
+<%= form_with model: @teacher do |form| %>
+  <%= form.text_field :username %>
+  <%= form.text_field :email %>
+  <%= form.submit "Login"%>
+<% end %>
