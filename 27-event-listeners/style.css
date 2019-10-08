@@ -1,0 +1,13 @@
+body {
+  background-color: goldenrod;
+}
+
+div {
+  background-color: white;
+  border: solid black 1px;
+  margin-bottom: 5px;
+}
+
+#clicker {
+  margin-bottom: 2px;
+}

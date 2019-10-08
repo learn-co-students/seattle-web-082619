@@ -1,0 +1,6 @@
+- simple clicker
+- image chooser
+- simple calculator
+- key, mouse listeners
+- city distance drop down list calculator
+- cat pictures

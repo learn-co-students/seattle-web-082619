@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <title>My Event-Driven Website</title>
+    <script src="./main.js"></script>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <h1>My Event Website</h1>
+
+    <div>
+      <p id="typewriter"></p>
+    </div>
+
+    <div>
+      <select id="city-selector">
+        <option>Select a city</option>
+        <option value="vancouver">Vancouver, B.C.</option>
+        <option value="seattle">Seattle</option>
+        <option value="portland">Portland</option>
+      </select>
+    </div>
+
+    <div>
+      <form id="mad-lib-form">
+        Noun: <input name="noun" type="text" />
+        Verb: <input name="verb" type="text" />
+        Adjective: <input name="adjective" type="text" />
+        <button type="submit">mad lib!</button>
+      </form>
+
+      <p>
+        The <span id="noun"></span>
+        <span id="verb"></span>
+        <span id="adjective"></span>.
+      </p>
+    </div>
+
+    <div>
+      <form id="todo-form">
+        <input id="todo-input" name="todo-text" type="text" />
+        <button id="todo-button" type="submit">add todo item</button>
+      </form>
+
+      <ul id="todo-list">
+        <li>wake up</li>
+        <li>pour milk</li>
+        <li>eat cereal</li>
+      </ul>
+    </div>
+
+    <div>
+      You've clicked this button
+      <span id="times">0</span>
+      times
+      <button id="clicker">click me</button>
+    </div>
+
+    <div>
+      1 + 1 =
+      <span id="addition"></span>
+    </div>
+  </body>
+</html>
