@@ -1,0 +1,60 @@
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1 get reference to all quote cards
+    let cards = document.getElementsByClassName('quote-card')
+    iterateThroughQuoteCards(cards)
+  })
+
+
+  function iterateThroughQuoteCards(cards) {
+    // 2 iterate through them
+    // 3 get reference to the btn-success
+    // 4 attach a click event listener
+    for (let card of cards) {
+      let successButton = card.getElementsByClassName('btn-success')[0]
+      successButton.addEventListener('click', () => {
+        // 5 inside event listener get reference to the Like span
+        // 6 increment the number inside the span
+        let span = successButton.querySelector('span')
+        console.log('span', span)
+
+        let likes = span.textContent
+        let count = parseInt(likes, 10)
+        count++
+        span.textContent = count
+      })
+    }
+  }
+
+</script>
+
+<li class='quote-card'>
+    <blockquote class="blockquote">
+      <p class="mb-0">This is my first quote</p>
+      <footer class="blockquote-footer">Someone famous</footer>
+      <br>
+      <button class='btn-success'>Likes: <span>07</span></button>
+      <button class='btn-danger'>Delete</button>
+    </blockquote>
+  </li>
+
+
+  <li class='quote-card'>
+    <blockquote class="blockquote">
+      <p class="mb-0">Someone once said something.</p>
+      <footer class="blockquote-footer">Someone famous</footer>
+      <br>
+      <button class='btn-success'>Likes: <span>23</span></button>
+      <button class='btn-danger'>Delete</button>
+    </blockquote>
+  </li>
+
+  <li class='quote-card'>
+    <blockquote class="blockquote">
+      <p class="mb-0">I got a cat on Sunday.</p>
+      <footer class="blockquote-footer">Someone famous</footer>
+      <br>
+      <button class='btn-success'>Likes: <span>123</span></button>
+      <button class='btn-danger'>Delete</button>
+    </blockquote>
+  </li>
