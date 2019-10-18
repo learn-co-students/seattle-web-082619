@@ -1,28 +1,25 @@
 class Starship {
-  constructor({id, name, registration}) {
+  constructor({id, name, registration, crew_members}) {
     this.id = id
     this.name = name
     this.registration = registration
+    this.crewMembers = crew_members
+
+    // crewList is only set once the Starship is rendered to the page
+    this.crewList = null
   }
 
-  addCrewmember() {
-    console.log('adding data', this.id, 'ship:', this.name)
-
-    let name = 'Leuitenant Commander Data'
-    fetch('http://localhost:3000/crew_members', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: name,
-        starship_id: this.id
-      })
-    })
-    .then(res => res.json())
+  createCrewMember(name) {
+    post(CREW_MEMBERS_URL, {name, starship_id: this.id})
     .then(json => {
-      console.log('name:', name)
+      this.appendCrewMember(name)
     })
+  }
+
+  appendCrewMember(name) {
+    let li = document.createElement('li')
+    li.textContent = name
+    this.crewList.appendChild(li)
   }
 
   toHTML() {
@@ -35,11 +32,26 @@ class Starship {
     let p = document.createElement('p')
     p.textContent = 'Registration: ' + this.registration
 
+    let input = document.createElement('input')
+    input.placeholder = 'new crew member name'
+
     let button = document.createElement('button')
     button.textContent = 'Add Data'
-    button.addEventListener('click', () => this.addCrewmember())
+    button.addEventListener('click', () => this.createCrewMember(input.value))
 
-    div.append(h2, p, button)
+    let crewTitle = document.createElement('h3')
+    crewTitle.textContent = 'Crew'
+
+    // create the crewList <ul> and save it for later so
+    // crew members can be added after creating them
+    let crewList = document.createElement('ul')
+    this.crewList = crewList
+
+    this.crewMembers.forEach(member => {
+      this.appendCrewMember(member.name)
+    })
+
+    div.append(h2, p, crewTitle, crewList, input, button)
     return div
   }
 }
